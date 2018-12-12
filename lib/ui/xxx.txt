@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:v_read/logic/bloc/PostBloc.dart';
-import 'package:v_read/models/NewsList.dart';
 import 'package:v_read/models/Post.dart';
-
 import 'package:v_read/utils/my_navigator.dart';
 import 'package:v_read/utils/network_util.dart';
 import 'package:v_read/utils/uidata.dart';
@@ -15,10 +13,8 @@ import 'package:v_read/widgets/LabelIcon.dart';
 class MainPage extends StatelessWidget {
   final NetworkUtil _netUtil = new NetworkUtil();
 
-  //List<NewsList> _allNews = new List<NewsList>();
-
   //column1
-  Widget profileColumn(BuildContext context, NewsList newsList) => Row(
+  Widget profileColumn(BuildContext context, Post post) => Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           Expanded(
@@ -29,7 +25,7 @@ class MainPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  newsList.title,
+                  post.personName,
                   style: Theme.of(context)
                       .textTheme
                       .body1
@@ -39,7 +35,7 @@ class MainPage extends StatelessWidget {
                   height: 5.0,
                 ),
                 Text(
-                  newsList.categoryName,
+                  post.address,
                   style: Theme.of(context).textTheme.caption.apply(
                       fontFamily: UIData.ralewayFont, color: Colors.pink),
                 ),
@@ -51,26 +47,26 @@ class MainPage extends StatelessWidget {
 
   //column last
 
-  Widget actionColumn(NewsList newsList) => Container(
+  Widget actionColumn(Post post) => Container(
         padding: EdgeInsets.all(8.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             LabelIcon(
-              label: "${newsList.viewCount} views",
+              label: "${post.viewCount} views",
               icon: FontAwesomeIcons.eye,
               iconColor: Colors.green,
             ),
-//            Text(
-//              post.postTime,
-//              style: TextStyle(fontFamily: UIData.ralewayFont),
-//            )
+            Text(
+              post.postTime,
+              style: TextStyle(fontFamily: UIData.ralewayFont),
+            )
           ],
         ),
       );
 
   //post cards
-  Widget postCard(BuildContext context, NewsList newList) {
+  Widget postCard(BuildContext context, Post post) {
     return InkWell(
       child: Card(
         elevation: 2.0,
@@ -78,12 +74,12 @@ class MainPage extends StatelessWidget {
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: profileColumn(context, newList),
+              child: profileColumn(context, post),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                newList.description,
+                post.message,
                 style: TextStyle(
                     fontWeight: FontWeight.normal,
                     fontFamily: UIData.ralewayFont),
@@ -92,14 +88,14 @@ class MainPage extends StatelessWidget {
             SizedBox(
               height: 10.0,
             ),
-            newList.image != null
+            post.messageImage != null
                 ? Image.network(
-                    newList.image.toString(),
+                    post.messageImage,
                     fit: BoxFit.cover,
                   )
                 : Container(),
-            newList.image != null ? Container() : CommonDivider(),
-            actionColumn(newList),
+            post.messageImage != null ? Container() : CommonDivider(),
+            actionColumn(post),
           ],
         ),
       ),
@@ -108,6 +104,31 @@ class MainPage extends StatelessWidget {
       },
     );
   }
+
+  //allposts dropdown
+//  Widget bottomBar() => PreferredSize(
+//      preferredSize: Size(double.infinity, 50.0),
+//      child: Container(
+//          color: Colors.redAccent,
+//          child: Align(
+//            alignment: Alignment.bottomCenter,
+//            child: Container(
+//              height: 50.0,
+//              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+//              color: Colors.white,
+//              child: Row(
+//                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                children: <Widget>[
+//                  Text(
+//                    "All Posts",
+//                    style: TextStyle(
+//                        color: Colors.black, fontWeight: FontWeight.w700),
+//                  ),
+//                  Icon(Icons.arrow_drop_down)
+//                ],
+//              ),
+//            ),
+//          )));
 
   Widget appBar() => SliverAppBar(
         backgroundColor: Colors.redAccent,
@@ -120,7 +141,7 @@ class MainPage extends StatelessWidget {
         // bottom: bottomBar(),
       );
 
-  Widget bodyList(List<NewsList> posts) => SliverList(
+  Widget bodyList(List<Post> posts) => SliverList(
         delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
           return Padding(
             padding: const EdgeInsets.all(8.0),
@@ -130,21 +151,18 @@ class MainPage extends StatelessWidget {
       );
 
   Widget bodySliverList() {
-    return FutureBuilder(
-        future: _netUtil.get(""),
+    PostBloc postBloc = PostBloc();
+    return StreamBuilder<List<Post>>(
+        stream: postBloc.postItems,
         builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return snapshot.hasData
-                ? CustomScrollView(
-                    slivers: <Widget>[
-                      appBar(),
-                      bodyList(snapshot.data),
-                    ],
-                  )
-                : Center(
-                    child: CircularProgressIndicator(),
-                  );
-          }
+          return snapshot.hasData
+              ? CustomScrollView(
+                  slivers: <Widget>[
+                    appBar(),
+                    bodyList(snapshot.data),
+                  ],
+                )
+              : Center(child: CircularProgressIndicator());
         });
   }
 

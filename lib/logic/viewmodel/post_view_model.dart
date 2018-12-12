@@ -9,16 +9,14 @@ class PostViewModel {
 
   getPosts() => <Post>[
     Post(
-        personName: "Pawan",
-        address: "New Delhi, India",
-        viewCount: 100,
+        personName: "នេះ​លេង​មែនទែន! Xiaomi ​ត្រៀម​ប្រកាស​ស្មាតហ្វូន​កាមេរ៉ា 48MP ធូរ​ថ្លៃ​ក្រោម ៣០០ ដុល្លារ",
+        address: "បច្ចេកវិទ្យា",
+        viewCount: 1,
 
         message:
-        "Google Developer Expert for Flutter. Passionate #Flutter, #Android Developer. #Entrepreneur #YouTuber",
-        personImage:
-        "https://avatars0.githubusercontent.com/u/12619420?s=460&v=4",
+        "នាយក​គ្រប់គ្រង​ Xiaomi លោក Lin Bin បាន​បង្ហើប​ពី​រឿងរ៉ាវ​ថា ​ក្រុមហ៊ុន​ខ្លួន​កំពុង​ឈរ​លើ​ការ​អភិវឌ្ឍ​ស្មាតហ្វូន​មាន​បំពាក់​កាមេរ៉ា​ទំហំ 48MP ដែល​កៀក​នឹង​បង្ហាញ​ខ្លួន​អំឡុង​ខែ​ក្រោយ​នេះ។",
         messageImage:
-        "https://cdn.pixabay.com/photo/2018/03/09/16/32/woman-3211957_1280.jpg",
+        "http://cdn.sabay.com/cdn/media.sabay.com/media/sabay-news/Technology-News/International/News216/5c0f8f869dfa2_1544523600.jpg",
         postTime: "Just Now"),
     Post(
         personName: "Amanda",

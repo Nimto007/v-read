@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class CommonDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -8,30 +7,32 @@ class CommonDrawer extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
-          new SizedBox(height: 30.0,),
+          new SizedBox(
+            height: 30.0,
+          ),
           new ListTile(
             title: Text(
-              "Profile",
+              "គ្រប់ប្រភេទ",
               style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18.0),
             ),
             leading: Icon(
-              Icons.person,
+              Icons.border_all,
               color: Colors.blue,
             ),
           ),
           new ListTile(
             title: Text(
-              "Shopping",
+              "ជីវិតនិងសង្គម",
               style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18.0),
             ),
             leading: Icon(
-              Icons.shopping_cart,
+              Icons.perm_identity,
               color: Colors.green,
             ),
           ),
           new ListTile(
             title: Text(
-              "Dashboard",
+              "នយោបាយ",
               style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18.0),
             ),
             leading: Icon(
@@ -41,22 +42,22 @@ class CommonDrawer extends StatelessWidget {
           ),
           new ListTile(
             title: Text(
-              "Timeline",
+              "កីឡា",
               style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18.0),
             ),
             leading: Icon(
-              Icons.timeline,
+              Icons.accessibility_new,
               color: Colors.cyan,
             ),
           ),
           Divider(),
           new ListTile(
             title: Text(
-              "Settings",
+              "វិទ្យាសាស្ត្រនិងបច្ចេកវិទ្យា",
               style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18.0),
             ),
             leading: Icon(
-              Icons.settings,
+              Icons.phonelink_setup,
               color: Colors.brown,
             ),
           ),

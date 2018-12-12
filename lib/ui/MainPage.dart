@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:v_read/logic/bloc/PostBloc.dart';
 import 'package:v_read/models/Post.dart';
+import 'package:v_read/utils/my_navigator.dart';
 import 'package:v_read/utils/uidata.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:v_read/widgets/CommonDivider.dart';
@@ -63,73 +64,78 @@ class MainPage extends StatelessWidget {
 
   //post cards
   Widget postCard(BuildContext context, Post post) {
-    return Card(
-      elevation: 2.0,
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: profileColumn(context, post),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              post.message,
-              style: TextStyle(
-                  fontWeight: FontWeight.normal,
-                  fontFamily: UIData.ralewayFont),
+    return InkWell(
+      child: Card(
+        elevation: 2.0,
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: profileColumn(context, post),
             ),
-          ),
-          SizedBox(
-            height: 10.0,
-          ),
-          post.messageImage != null
-              ? Image.network(
-                  post.messageImage,
-                  fit: BoxFit.cover,
-                )
-              : Container(),
-          post.messageImage != null ? Container() : CommonDivider(),
-          actionColumn(post),
-        ],
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                post.message,
+                style: TextStyle(
+                    fontWeight: FontWeight.normal,
+                    fontFamily: UIData.ralewayFont),
+              ),
+            ),
+            SizedBox(
+              height: 10.0,
+            ),
+            post.messageImage != null
+                ? Image.network(
+                    post.messageImage,
+                    fit: BoxFit.cover,
+                  )
+                : Container(),
+            post.messageImage != null ? Container() : CommonDivider(),
+            actionColumn(post),
+          ],
+        ),
       ),
+      onTap: () {
+        MyNavigator.goToNewsDetail(context);
+      },
     );
   }
 
   //allposts dropdown
-  Widget bottomBar() => PreferredSize(
-      preferredSize: Size(double.infinity, 50.0),
-      child: Container(
-          color: Colors.redAccent,
-          child: Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-              height: 50.0,
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              color: Colors.white,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    "All Posts",
-                    style: TextStyle(
-                        color: Colors.black, fontWeight: FontWeight.w700),
-                  ),
-                  Icon(Icons.arrow_drop_down)
-                ],
-              ),
-            ),
-          )));
+//  Widget bottomBar() => PreferredSize(
+//      preferredSize: Size(double.infinity, 50.0),
+//      child: Container(
+//          color: Colors.redAccent,
+//          child: Align(
+//            alignment: Alignment.bottomCenter,
+//            child: Container(
+//              height: 50.0,
+//              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+//              color: Colors.white,
+//              child: Row(
+//                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                children: <Widget>[
+//                  Text(
+//                    "All Posts",
+//                    style: TextStyle(
+//                        color: Colors.black, fontWeight: FontWeight.w700),
+//                  ),
+//                  Icon(Icons.arrow_drop_down)
+//                ],
+//              ),
+//            ),
+//          )));
 
   Widget appBar() => SliverAppBar(
         backgroundColor: Colors.redAccent,
         elevation: 2.0,
-        title: Text("VREAD"),
+        title: Text("តោះអាន"),
         centerTitle: true,
         forceElevated: true,
         pinned: true,
-        floating: true,
-        bottom: bottomBar(),
+        floating: false,
+       // bottom: bottomBar(),
       );
 
   Widget bodyList(List<Post> posts) => SliverList(

@@ -5,8 +5,8 @@ import 'package:http/http.dart' as http;
 class NetworkUtil {
   // next three lines makes this class a Singleton
   static NetworkUtil _instance = new NetworkUtil.internal();
-  static final baseUrlImg = "http://go.cxpress.net/";
-  static final baseUrl = "http://api.cxpress.net/";
+ // static final baseUrlImg = "http://go.cxpress.net/";
+  static final baseUrl = "http://news.cxpress.net/";
 
   NetworkUtil.internal();
   factory NetworkUtil() => _instance;

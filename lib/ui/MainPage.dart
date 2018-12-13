@@ -1,160 +1,117 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:v_read/logic/bloc/PostBloc.dart';
 import 'package:v_read/models/NewsList.dart';
-import 'package:v_read/models/Post.dart';
-
-import 'package:v_read/utils/my_navigator.dart';
 import 'package:v_read/utils/network_util.dart';
-import 'package:v_read/utils/uidata.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:v_read/widgets/CommonDivider.dart';
-import 'package:v_read/widgets/CommonDrawer.dart';
-import 'package:v_read/widgets/LabelIcon.dart';
 
-class MainPage extends StatelessWidget {
-  final NetworkUtil _netUtil = new NetworkUtil();
+class MainPage extends StatefulWidget {
+  @override
+  _MainPageState createState() => _MainPageState();
+}
 
-  //List<NewsList> _allNews = new List<NewsList>();
+class _MainPageState extends State<MainPage> {
+  List<NewsList> _allNews = new List<NewsList>();
 
-  //column1
-  Widget profileColumn(BuildContext context, NewsList newsList) => Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          Expanded(
-              child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 0.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  newsList.title,
-                  style: Theme.of(context)
-                      .textTheme
-                      .body1
-                      .apply(fontWeightDelta: 700),
-                ),
-                SizedBox(
-                  height: 5.0,
-                ),
-                Text(
-                  newsList.categoryName,
-                  style: Theme.of(context).textTheme.caption.apply(
-                      fontFamily: UIData.ralewayFont, color: Colors.pink),
-                ),
-              ],
-            ),
-          ))
-        ],
-      );
+  NetworkUtil _netUtil = new NetworkUtil();
 
-  //column last
-
-  Widget actionColumn(NewsList newsList) => Container(
-        padding: EdgeInsets.all(8.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            LabelIcon(
-              label: "${newsList.viewCount} views",
-              icon: FontAwesomeIcons.eye,
-              iconColor: Colors.green,
-            ),
-//            Text(
-//              post.postTime,
-//              style: TextStyle(fontFamily: UIData.ralewayFont),
-//            )
-          ],
-        ),
-      );
-
-  //post cards
-  Widget postCard(BuildContext context, NewsList newList) {
-    return InkWell(
+  Widget _getItemUI(BuildContext context, int index) {
+    return new Container(
+      padding: EdgeInsets.all(8.0),
       child: Card(
-        elevation: 2.0,
-        child: Column(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: profileColumn(context, newList),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                newList.description,
-                style: TextStyle(
-                    fontWeight: FontWeight.normal,
-                    fontFamily: UIData.ralewayFont),
+        elevation: 1.0,
+        child: Container(
+          alignment: Alignment.topLeft,
+          width: double.infinity,
+          //padding: EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.all(10.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      // _allNews[index].title,
+                      "មូលហេតុធំ 4 យ៉ាង​នៃ​ការកើត​មុន​",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 16.0),
+                    ),
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                    Text(
+                      'បច្ចេកវិទ្យា!',
+                      style: TextStyle(fontSize: 12.0, color: Colors.redAccent),
+                      textAlign: TextAlign.left,
+                    ),
+                    SizedBox(
+                      height: 20.0,
+                    ),
+                    Text(
+                      'ចូលចិត្ត​រញ៉េរញ៉ៃ​ជាមួយ​ផ្ទៃមុខ ដូចជា ចាប់ ប៉ះ អង្អែល កេះ អេះ​ផ្ទៃមុខ​ញឹកញាប់។ កុំភ្លេចថា ដៃ​របស់​អ្នក​បាន​ទៅ​ចាប់​ប៉ះ​អ្វី​មក​ខ្លះ​ក្នុងមួយថ្ងៃៗ បើ​អ្នក​មិនបាន​លាងដៃ ហើយ​មក​ផ្ទៃមុខ​ញឹកញាប់ ក៏​អាច​បង្ក​ឱ្យ​កើតការ​រមាស់​ក្រហាយ ឬ​នាំ​មេរោគ​បាក់តេរីមក',
+                      style: TextStyle(),
+                      textAlign: TextAlign.left,
+                    ),
+                    SizedBox(
+                      height: 20.0,
+                    ),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(
-              height: 10.0,
-            ),
-            newList.image != null
-                ? Image.network(
-                    newList.image.toString(),
+              Container(
+                height: 200.0,
+                decoration: new BoxDecoration(
+                  image: new DecorationImage(
+                    image: new NetworkImage(
+                        'http://cdn.sabay.com/cdn/media.sabay.com/media/sabay-news/Technology-News/International/News216/5c10cf4a1cf47_1544605500.png'),
                     fit: BoxFit.cover,
-                  )
-                : Container(),
-            newList.image != null ? Container() : CommonDivider(),
-            actionColumn(newList),
-          ],
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
-      onTap: () {
-        MyNavigator.goToNewsDetail(context);
-      },
     );
   }
 
-  Widget appBar() => SliverAppBar(
-        backgroundColor: Colors.redAccent,
-        elevation: 2.0,
-        title: Text("តោះអាន"),
-        centerTitle: true,
-        forceElevated: true,
-        pinned: true,
-        floating: false,
-        // bottom: bottomBar(),
-      );
-
-  Widget bodyList(List<NewsList> posts) => SliverList(
-        delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: postCard(context, posts[index]),
-          );
-        }, childCount: posts.length),
-      );
-
-  Widget bodySliverList() {
-    return FutureBuilder(
-        future: _netUtil.get(""),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return snapshot.hasData
-                ? CustomScrollView(
-                    slivers: <Widget>[
-                      appBar(),
-                      bodyList(snapshot.data),
-                    ],
-                  )
-                : Center(
-                    child: CircularProgressIndicator(),
-                  );
-          }
-        });
-  }
-
-  //@override
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       child: Scaffold(
-        drawer: CommonDrawer(),
-        body: bodySliverList(),
+        //drawer: CommonDrawer(),
+        appBar: AppBar(
+          title: Text("VRED"),
+        ),
+        body: FutureBuilder(
+            future: _netUtil.get('news-list'),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                _allNews = new List<NewsList>();
+                for (int i = 0; i < snapshot.data.length; i++) {
+                  var row = snapshot.data[i];
+                  _allNews.add(new NewsList(
+                    id: row["id"],
+                    title: row["title"],
+                    categoryName: row["category_name"],
+                    image: row["image"],
+                    description: row["decription"],
+                    date: row["date"],
+                    viewCount: row["view_count"],
+                  ));
+                }
+                return ListView.builder(
+                  itemCount: _allNews.length,
+                  itemBuilder: _getItemUI,
+                  padding: EdgeInsets.all(0.0),
+                );
+              } else if (snapshot.hasError) {
+                return Text("${snapshot.error}");
+              }
+              return Center(child: CircularProgressIndicator());
+            }),
       ),
       onWillPop: () {
         _onWillPop();

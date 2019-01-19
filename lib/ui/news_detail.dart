@@ -70,12 +70,6 @@ class NewsDetail extends StatelessWidget {
             SizedBox(
               height: 20.0,
             ),
-//            Text(
-//              row.content,
-//              style: TextStyle(fontSize: 16.0, height: 1.3),
-//              textAlign: TextAlign.justify,
-//            ),
-
             HtmlWidget(row.content),
           ],
         ),

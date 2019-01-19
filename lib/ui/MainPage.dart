@@ -65,8 +65,6 @@ class _MainPageState extends State<MainPage> {
                     ],
                   ),
                 ),
-
-
                 Container(
                   height: 200.0,
                   width: double.infinity,
@@ -75,25 +73,18 @@ class _MainPageState extends State<MainPage> {
                     fit: BoxFit.cover,
                     imageUrl: NetworkUtil.baseUrl + _allNews[index].image,
                     placeholder:
-                    new Image.asset("assets/images/placeholder_image.png"),
+                        new Image.asset("assets/images/placeholder_image.png"),
                   ),
                 ),
-
-
               ],
             ),
           ),
         ),
         onTap: () {
-//          Navigator.push(
-//              context,
-//              MaterialPageRoute(
-//                  builder: (context) => NewsDetail(
-//                    //Rows: _allNews[index].id,
-//                  )));
-
           NewsDetail.row = _allNews[index];
-          MyNavigator.goToNewsDetail(context);
+          try {
+            MyNavigator.goToNewsDetail(context);
+          } catch (e) {}
         },
       ),
     );
@@ -103,7 +94,54 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return WillPopScope(
       child: Scaffold(
-        drawer: Drawer(),
+        drawer: Drawer(
+          child: ListView(
+            children: <Widget>[
+              ListTile(
+                leading: Icon(Icons.notifications_active),
+                title: Text('សម្រស់'),
+                trailing: Icon(Icons.navigate_next),
+                onTap: () => Navigator.of(context).pop(),
+              ),
+              Divider(),
+              ListTile(
+                leading: Icon(Icons.notifications_active),
+                title: Text('សម្រស់'),
+                trailing: Icon(Icons.navigate_next),
+                onTap: () => Navigator.of(context).pop(),
+              ),
+              Divider(),
+              ListTile(
+                leading: Icon(Icons.notifications_active),
+                title: Text('សម្រស់'),
+                trailing: Icon(Icons.navigate_next),
+                onTap: () => Navigator.of(context).pop(),
+              ),
+              Divider(),
+              ListTile(
+                leading: Icon(Icons.notifications_active),
+                title: Text('សម្រស់'),
+                trailing: Icon(Icons.navigate_next),
+                onTap: () => Navigator.of(context).pop(),
+              ),
+              Divider(),
+              ListTile(
+                leading: Icon(Icons.notifications_active),
+                title: Text('សម្រស់'),
+                trailing: Icon(Icons.navigate_next),
+                onTap: () => Navigator.of(context).pop(),
+              ),
+              Divider(),
+              ListTile(
+                leading: Icon(Icons.notifications_active),
+                title: Text('សម្រស់'),
+                trailing: Icon(Icons.navigate_next),
+                onTap: () => Navigator.of(context).pop(),
+              ),
+              Divider(),
+            ],
+          ),
+        ),
         appBar: AppBar(
           title: Text('VREAD'),
           centerTitle: true,

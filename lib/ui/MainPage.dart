@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:v_read/models/News.dart';
@@ -64,16 +65,21 @@ class _MainPageState extends State<MainPage> {
                     ],
                   ),
                 ),
+
+
                 Container(
                   height: 200.0,
-                  decoration: new BoxDecoration(
-                    image: new DecorationImage(
-                      image: new NetworkImage(
-                          NetworkUtil.baseUrl + _allNews[index].image),
-                      fit: BoxFit.cover,
-                    ),
+                  width: double.infinity,
+                  child: new CachedNetworkImage(
+                    errorWidget: new Icon(Icons.error),
+                    fit: BoxFit.cover,
+                    imageUrl: NetworkUtil.baseUrl + _allNews[index].image,
+                    placeholder:
+                    new Image.asset("assets/images/placeholder_image.png"),
                   ),
-                )
+                ),
+
+
               ],
             ),
           ),
